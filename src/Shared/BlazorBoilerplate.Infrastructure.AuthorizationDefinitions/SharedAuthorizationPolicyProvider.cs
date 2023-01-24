@@ -37,7 +37,9 @@ namespace BlazorBoilerplate.Infrastructure.AuthorizationDefinitions
                         policy = new AuthorizationPolicyBuilder()
                             .RequireAuthenticatedUser()
                             .AddRequirements(new EmailVerifiedRequirement(true))
+                            #if !DEBUG
                             .RequireClaim(JwtClaimTypes.AuthenticationMethod, ClaimValues.AuthenticationMethodMFA)
+                            #endif
                             .RequireClaim(ApplicationClaimTypes.IsSubscriptionActive, ClaimValues.trueString)
                             .Build();
 
